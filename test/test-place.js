@@ -2,7 +2,7 @@ const test = require('tape');
 const request = require('supertest');
 const faker = require('faker');
 const { app, connection } = require('../server');
-const { getShipSize } = require('../app/utils');
+const { getShipByName } = require('../app/utils');
 
 test('Place Ships', async t => {
   let game_token;
@@ -20,8 +20,8 @@ test('Place Ships', async t => {
     'submarine'
   ]);
   const vertical = faker.random.boolean();
-  let xPos = faker.random.number(9 - getShipSize(ship).size);
-  let yPos = faker.random.number(9 - getShipSize(ship).size);
+  let xPos = faker.random.number(9 - getShipByName(ship).size);
+  let yPos = faker.random.number(9 - getShipByName(ship).size);
 
   // Valid Placement
   await request(app)
@@ -35,7 +35,7 @@ test('Place Ships', async t => {
     .expect(200)
     .expect(({ body }) => {
       let flag = true;
-      const size = getShipSize(ship);
+      const size = getShipByName(ship);
       for (let i = 0; i < size; i++) {
         if (body[yPos][xPos] != 1) {
           flag = false;
@@ -44,9 +44,9 @@ test('Place Ships', async t => {
         if (vertical === true) yPos++;
         else xPos++;
       }
-      t.true(flag);
+      t.true(flag, 'Placement on empty coordinates returned success.');
     })
-    .catch(() => t.fail());
+    .catch(err => t.fail(err));
 
   // Invalid Placement
   await request(app)
@@ -58,7 +58,7 @@ test('Place Ships', async t => {
       yPos
     })
     .expect(400)
-    .catch(() => t.pass('Expected Result'));
+    .catch(() => t.pass('Placement on occupied coordinates returns error'));
   t.end();
 });
 

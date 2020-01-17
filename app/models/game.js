@@ -32,6 +32,7 @@ const GameSchema = new Schema({
     }
   },
   ended_at: { type: Date },
+  attack_count: { type: Number, default: 0 },
   status: { type: String, default: 'placing_ships' },
   total_ships: {
     type: Number,

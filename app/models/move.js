@@ -10,10 +10,11 @@ const Schema = mongoose.Schema;
  */
 
 const MoveSchema = new Schema({
-  game_id: { type: mongoose.Types.ObjectId, default: '' },
+  game_id: { type: mongoose.Types.ObjectId, required: true },
   move_at: { type: Date, default: Date.now },
-  hashed_password: { type: String, default: '' },
-  salt: { type: String, default: '' }
+  xPos: { type: Number, required: true },
+  yPos: { type: Number, required: true },
+  hit: { type: Boolean, required: true }
 });
 
 /**
@@ -39,4 +40,4 @@ MoveSchema.static({});
  * Register
  */
 
-mongoose.model('User', MoveSchema);
+module.exports = mongoose.model('Move', MoveSchema);

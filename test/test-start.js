@@ -10,10 +10,13 @@ test('Start game', async t => {
     .get('/start')
     .expect(200)
     .expect(({ text }) => {
-      t.true(mongoose.Types.ObjectId.isValid(text));
+      t.true(
+        mongoose.Types.ObjectId.isValid(text),
+        'Returned valid Object Id after starting game.'
+      );
       game_token = text;
     })
-    .catch(() => t.fail());
+    .catch(err => t.fail(err));
 
   // Valid Id
   await request(app)
@@ -26,15 +29,15 @@ test('Start game', async t => {
         if (body[i].length != 10) flag = false;
         for (let j = 0; j < 10; j++) if (body[i][j] != 0) flag = false;
       }
-      t.true(flag);
+      t.true(flag, 'Returns valid status');
     })
-    .catch(() => t.fail());
+    .catch(err => t.fail(err));
 
   // Invalid Id
   await request(app)
     .get('/' + mongoose.Types.ObjectId() + '/status')
     .expect(404)
-    .catch(() => t.pass('Expected Result'));
+    .catch(() => t.pass('Throws error when non existant Id is passed.'));
 
   t.end();
 });

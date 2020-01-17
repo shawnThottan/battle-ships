@@ -3,22 +3,26 @@ function getShipByName(ship) {
     case 'battleship':
       return {
         id: 1,
-        size: 4
+        size: 4,
+        count: 1
       };
     case 'cruiser':
       return {
         id: 2,
-        size: 3
+        size: 3,
+        count: 2
       };
     case 'destroyer':
       return {
         id: 3,
-        size: 2
+        size: 2,
+        count: 3
       };
     case 'submarine':
       return {
         id: 4,
-        size: 3
+        size: 3,
+        count: 4
       };
     default:
       throw 'Ship name is not valid';
@@ -40,4 +44,4 @@ function getShipById(id) {
   }
 }
 
-module.exports = { getShipSize: getShipByName, getShipById };
+module.exports = { getShipByName, getShipById };
