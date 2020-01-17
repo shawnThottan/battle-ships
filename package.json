@@ -10,7 +10,7 @@
     "node": ">=10.x"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=dev nodemon server.js",
+    "start": "cross-env NODE_ENV=dev nodemon --exec babel-node server.js",
     "test": "cross-env NODE_ENV=test babel-tape-runner test/test-*.js",
     "pretest": "eslint ."
   },
@@ -33,11 +33,17 @@
     "view-helpers": "~0.2.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
     "babel-eslint": "~10.0.3",
     "babel-tape-runner": "~3.0.0",
     "eslint": "~6.8.0",
     "eslint-config-prettier": "~6.9.0",
     "eslint-plugin-prettier": "~3.1.2",
+    "faker": "^4.1.0",
     "nodemon": "2.0.2",
     "npm-check-updates": "~4.0.1",
     "prettier": "~1.19.1",
