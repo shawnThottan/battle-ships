@@ -4,7 +4,7 @@ const Game = require('../models/game');
 async function placeShip(_id, details) {
   const game = await Game.findOne({ _id });
   if (!game) throw 'Not Found';
-  if (game.status != 'placing_ships') throw 'Not Ready to Place Ships.';
+  if (game.status != 'placing_ships') throw 'All Ships have been placed.';
 
   const { ship } = details;
   const { id, size } = getShipByName(ship);
