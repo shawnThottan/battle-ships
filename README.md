@@ -5,20 +5,23 @@ Uses Node, Express and MongoDB.
 
 ## Usage
     
-SET UP THE APPLICATION:
+##### SET UP THE APPLICATION:
     git clone https://github.com/OmegaShAwn/battle-ships.git
-    cd node-express-mongoose
+    cd battle-ships
     npm install
     cp config.js.example config.js
 
-TO RUN THE APPLICATION:
+
+##### TO RUN THE APPLICATION:
     npm start
 
-TO RUN THE TESTS IN THE APPLICATION:
+
+##### TO RUN THE TESTS IN THE APPLICATION:
     npm test
 
-PLAYING THE GAME:
-   -  To Start the Game:
+
+## PLAYING THE GAME:
+    -  To Start the Game:
         -- Get Request to http://localhost:3000/start
         -- Response will be GAME ID
     - To View the status of the Game:

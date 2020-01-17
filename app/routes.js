@@ -4,6 +4,7 @@ const gameController = require('./controllers/gameController');
 const defenderController = require('./controllers/defenderController');
 const attackerController = require('./controllers/attackerController');
 
+// api to start the game
 router.get('/start', async (req, res) => {
   try {
     const id = await gameController.startGame();
@@ -14,6 +15,7 @@ router.get('/start', async (req, res) => {
   }
 });
 
+// api to get status of the game
 router.get('/:gameId/status', async (req, res) => {
   try {
     const status = await gameController.getStatus(req.params.gameId);
@@ -25,6 +27,7 @@ router.get('/:gameId/status', async (req, res) => {
   }
 });
 
+// api to place a ship
 router.get('/:gameId/place', async (req, res) => {
   try {
     const { current_state } = await defenderController.placeShip(
@@ -39,6 +42,7 @@ router.get('/:gameId/place', async (req, res) => {
   }
 });
 
+// api to attack a coordinate
 router.get('/:gameId/attack', async (req, res) => {
   try {
     const status = await attackerController.attack(

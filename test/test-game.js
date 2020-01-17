@@ -15,7 +15,6 @@ test('Playing a whole game', async t => {
       game_token = text;
     });
 
-  console.log(game_token);
   // Places all ships.
   let requests = [];
   for (let i = 0; i < 10; i++) {
