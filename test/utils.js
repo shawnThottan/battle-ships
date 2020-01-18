@@ -49,6 +49,30 @@ async function placeBattleShip() {
   return game.save().then(game => game.id);
 }
 
+async function readyToSinkGame() {
+  const game = await new Game();
+  const matrix = [
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 4]
+  ];
+  game.current_state = matrix;
+  game.battleship = 1;
+  game.cruiser = 0;
+  game.destroyer = 0;
+  game.submarine = 1;
+  game.total_ships = 2;
+  game.status = 'attacking';
+  return game.save().then(game => game.id);
+}
+
 const shipNames = ['battleship', 'cruiser', 'destroyer', 'submarine'];
 
 const allShips = [
@@ -67,6 +91,7 @@ const allShips = [
 module.exports = {
   placeShips,
   placeBattleShip,
+  readyToSinkGame,
   shipNames,
   allShips
 };

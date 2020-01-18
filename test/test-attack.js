@@ -1,19 +1,21 @@
 const test = require('tape');
 const request = require('supertest');
 const { app, connection } = require('../server');
-const { placeShips } = require('./utils');
+const { readyToSinkGame, placeShips } = require('./utils');
 
 // ignores the console.log()
 global.console.log = () => {};
 
 test('Attack Ships', async t => {
-  const game_token = await placeShips();
+  let game_token = await placeShips();
 
   // Attack points that will Hit.
   let xPos = 0;
   let yPos = 0;
 
-  // Attack Ship
+  /*
+   * 1) Hit On Ship
+   */
   await request(app)
     .get('/' + game_token + '/attack')
     .query({
@@ -30,7 +32,9 @@ test('Attack Ships', async t => {
   xPos = 9;
   yPos = 9;
 
-  // Attack Ship
+  /*
+   * 2) Miss An Attack
+   */
   await request(app)
     .get('/' + game_token + '/attack')
     .query({
@@ -47,7 +51,9 @@ test('Attack Ships', async t => {
   xPos = 10;
   yPos = 10;
 
-  // Attack Ship
+  /*
+   * 3) Attack at invalid points.
+   */
   await request(app)
     .get('/' + game_token + '/attack')
     .query({
@@ -63,6 +69,46 @@ test('Attack Ships', async t => {
       );
     })
     .catch(err => err);
+
+  /*
+   * 4) Sink a Ship.
+   */
+  game_token = await readyToSinkGame();
+  await request(app)
+    .get('/' + game_token + '/attack')
+    .query({
+      xPos: 3,
+      yPos: 0
+    })
+    .expect(200)
+    .expect(({ text }) => {
+      t.equals(
+        text,
+        'You just sank a battleship',
+        'returns valid response on sinking a ship'
+      );
+    })
+    .catch(err => t.fail(err));
+
+  /*
+   * 5) Win the game.
+   */
+  await request(app)
+    .get('/' + game_token + '/attack')
+    .query({
+      xPos: 9,
+      yPos: 9
+    })
+    .expect(200)
+    .expect(({ text }) => {
+      t.equals(
+        text,
+        'Win! You have completed the game in 2 moves',
+        'returns valid response on winning the game.'
+      );
+    })
+    .catch(err => t.fail(err));
+
   t.end();
 });
 
