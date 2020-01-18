@@ -39,6 +39,27 @@ test('Attack Ships', async t => {
       t.equals(text, 'Miss', 'Returned `Miss` on empty coordinates.');
     })
     .catch(err => t.fail(err));
+
+  // Invalid Points.
+  xPos = 10;
+  yPos = 10;
+
+  // Attack Ship
+  await request(app)
+    .get('/' + game_token + '/attack')
+    .query({
+      xPos,
+      yPos
+    })
+    .expect(400)
+    .expect(({ text }) => {
+      t.equals(
+        text,
+        'Invalid Position',
+        'returned `invalid position` on invalid position'
+      );
+    })
+    .catch(err => err);
   t.end();
 });
 

@@ -3,7 +3,7 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const async = require('async');
 const { app, connection } = require('../server');
-const { ships } = require('./utils');
+const { allShips } = require('./utils');
 
 test('Playing a whole game', async t => {
   let game_token;
@@ -22,7 +22,7 @@ test('Playing a whole game', async t => {
       request(app)
         .get('/' + game_token + '/place')
         .query({
-          ship: ships[i],
+          ship: allShips[i],
           xPos: i % 2 == 0 ? 0 : 5,
           yPos: i % 2 == 0 ? i : i - 1
         })

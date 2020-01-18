@@ -1,6 +1,10 @@
 const { getShipByName } = require('../utils');
 const Game = require('../models/game');
 
+const checkIfValid = pos => {
+  if (pos < 0 || pos > 9) throw `Ship's position is invalid`;
+};
+
 async function placeShip(_id, details) {
   const game = await Game.findOne({ _id });
   if (!game) throw 'Not Found';
@@ -14,6 +18,9 @@ async function placeShip(_id, details) {
   xPos = parseInt(xPos);
   yPos = parseInt(yPos);
 
+  checkIfValid(xPos);
+  checkIfValid(yPos);
+
   // Checks whether the neighbouring area is clear before placing the ship.
   for (let i = 0; i < size; i++)
     for (let j = -1; j < 2; j++)
@@ -25,7 +32,7 @@ async function placeShip(_id, details) {
           (j == 0 && k == 0 && value != 0) || // if the coordinates to place the ship is not 0.
           (value != null && value > 0 && value <= 4) // if the surrounding points are not clear
         )
-          throw 'Invalid Position';
+          throw 'Area Occupied';
       }
 
   // Places the ship
@@ -43,7 +50,9 @@ async function placeShip(_id, details) {
 
   game.markModified('current_state');
 
-  return game.save();
+  return game.save().catch(err => {
+    throw err.message.split(': ')?.[2] || err.message;
+  });
 }
 
 module.exports = {

@@ -20,7 +20,7 @@ const GameSchema = new Schema({
     of: Array,
     default: matrix,
 
-    // Validates the map to contain only valid values with fixed size.
+    // Validates the map to contain only valid values within the area.
     validate: {
       validator: y => {
         return (

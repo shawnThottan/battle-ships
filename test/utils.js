@@ -26,7 +26,34 @@ async function placeShips() {
   return game.save().then(game => game.id);
 }
 
-const ships = [
+async function placeBattleShip() {
+  const game = await new Game();
+  //TODO: Replace with suitable randomise function.
+  const matrix = [
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ];
+  game.current_state = matrix;
+  game.battleship = 1;
+  game.cruiser = 0;
+  game.destroyer = 0;
+  game.submarine = 0;
+  game.total_ships = 1;
+  game.status = 'placing_ships';
+  return game.save().then(game => game.id);
+}
+
+const shipNames = ['battleship', 'cruiser', 'destroyer', 'submarine'];
+
+const allShips = [
   'battleship',
   'cruiser',
   'cruiser',
@@ -41,5 +68,7 @@ const ships = [
 
 module.exports = {
   placeShips,
-  ships
+  placeBattleShip,
+  shipNames,
+  allShips
 };
