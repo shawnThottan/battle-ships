@@ -3,6 +3,9 @@ const request = require('supertest');
 const { app, connection } = require('../server');
 const { placeShips } = require('./utils');
 
+// ignores the console.log()
+global.console.log = () => {};
+
 test('Attack Ships', async t => {
   const game_token = await placeShips();
 
@@ -19,7 +22,7 @@ test('Attack Ships', async t => {
     })
     .expect(200)
     .expect(({ text }) => {
-      t.equals(text, 'Hit', 'returned `Hit` on occupied coordinates.');
+      t.equals(text, 'Hit', 'returns `Hit` on occupied coordinates.');
     })
     .catch(err => t.fail(err));
 
@@ -56,7 +59,7 @@ test('Attack Ships', async t => {
       t.equals(
         text,
         'Invalid Position',
-        'returned `invalid position` on invalid position'
+        'returns `invalid position` on invalid position'
       );
     })
     .catch(err => err);

@@ -12,7 +12,7 @@ test('Start game', async t => {
     .expect(({ text }) => {
       t.true(
         mongoose.Types.ObjectId.isValid(text),
-        'Returned valid Object Id after starting game.'
+        'Returns valid Object Id after starting game.'
       );
       game_token = text;
     })

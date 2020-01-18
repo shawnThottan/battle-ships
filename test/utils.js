@@ -2,7 +2,6 @@ const Game = require('../app/models/game');
 
 async function placeShips() {
   const game = await new Game();
-  //TODO: Replace with suitable randomise function.
   const matrix = [
     [1, 1, 1, 1, 0, 2, 2, 2, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -28,7 +27,6 @@ async function placeShips() {
 
 async function placeBattleShip() {
   const game = await new Game();
-  //TODO: Replace with suitable randomise function.
   const matrix = [
     [1, 1, 1, 1, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],

@@ -44,7 +44,7 @@ test('Place Ships', async t => {
         if (vertical === true) yPos++;
         else xPos++;
       }
-      t.true(flag, 'Placement on empty coordinates returned success.');
+      t.true(flag, 'Placement on empty coordinates returns success.');
     })
     .catch(err => t.fail(err));
 
