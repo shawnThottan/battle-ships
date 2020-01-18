@@ -1,4 +1,4 @@
-## Node Express Mongoose
+## Battle Ships using Node Express Mongoose
 
 Node.js application provides apis for playing BattleShips, the Game.
 Uses Node, Express and MongoDB.
